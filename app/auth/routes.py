@@ -5,7 +5,6 @@ from datetime import timedelta
 from . import auth_blueprint as auth
 
 
-
 @auth.post("/register")
 def handle_register():
     data = request.json
@@ -13,7 +12,7 @@ def handle_register():
         return jsonify({"message": "username, email, and password are required to register"}), 400
 
     username = data.get("username")
-    email = data.get("email")  # Include 'email' in the registration data
+    email = data.get("email")  
     password = data.get("password")
 
     if not username:
@@ -26,7 +25,7 @@ def handle_register():
     if User.query.filter_by(username=username).first():
         return jsonify({"message": "username already in use"}), 400
 
-    user = User(username=username, email=email, password=password)  # Include 'email' when creating the user
+    user = User(username=username, email=email, password=password)  
     user.create()
 
     return jsonify({"message": "user registered", "data": user.to_response()}), 201
